@@ -76,6 +76,9 @@ public class MyArrayList<E> {
         }
     }
 
+    /**
+     * Remove element from elementData by index.
+     */
     private void removeFromArray(int index) {
         int newSize = this.size - 1;
 
@@ -130,6 +133,9 @@ public class MyArrayList<E> {
         return (E) this.elementData[index];
     }
 
+    /**
+     * Remove element from list by value.
+     */
     public void remove(Object element) {
         int elementIndex = -1;
 
@@ -146,6 +152,9 @@ public class MyArrayList<E> {
         removeFromArray(elementIndex);
     }
 
+    /**
+     * Remove element from list by index.
+     */
     public void remove(int index) {
         checkIndex(index);
         removeFromArray(index);
