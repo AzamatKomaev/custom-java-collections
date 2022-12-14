@@ -62,7 +62,7 @@ public class ArrayListTest {
     }
 
     @Test
-    public void testAddValuesToList() {
+    public void testAddValuesToEndOfList() {
         MyArrayList<Integer> list = new MyArrayList<>();
         Object[] exceptedArray = new Object[]{1, 50, 3};
         list.add(1);
@@ -75,10 +75,28 @@ public class ArrayListTest {
     }
 
     @Test
+    public void testAddValuesByIndexToList() {
+        MyArrayList<Integer> list = new MyArrayList<>();
+        Object[] exceptedArray = new Object[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        for (int i=1; i<=10; i++) {
+            if (i == 2) {
+                continue;
+            }
+            list.add(i); // 1, 3, 4 ... 9, 10
+        }
+        list.add(0, 0);
+        list.add(2, 2);
+
+        assertEquals(11, list.size());
+        assertArrayEquals(exceptedArray, list.toArray());
+
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testUnsuccessfulAddValuesToList() {
         MyArrayList<Integer> list = new MyArrayList<>();
-
-
         list.add(1, 100);
+
+        assertTrue(list.isEmpty());
     }
 }
