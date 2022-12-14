@@ -62,20 +62,20 @@ public class ArrayListTest {
     }
 
     @Test
-    public void testAddValuesToEndOfList() {
+    public void testAddValuesToEnd() {
         MyArrayList<Integer> list = new MyArrayList<>();
-        Object[] exceptedArray = new Object[]{1, 50, 3};
+        Object[] exceptedArray = new Object[]{1, 50, 2, 3};
         list.add(1);
         list.add(2);
         list.add(3);
         list.add(1, 50);
 
-        assertEquals(3, list.size());
+        assertEquals(4, list.size());
         assertArrayEquals(exceptedArray, list.toArray());
     }
 
     @Test
-    public void testAddValuesByIndexToList() {
+    public void testAddValuesByIndex() {
         MyArrayList<Integer> list = new MyArrayList<>();
         Object[] exceptedArray = new Object[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         for (int i=1; i<=10; i++) {
@@ -93,10 +93,44 @@ public class ArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testUnsuccessfulAddValuesToList() {
+    public void testUnsuccessfulAddValues() {
         MyArrayList<Integer> list = new MyArrayList<>();
         list.add(1, 100);
 
         assertTrue(list.isEmpty());
+    }
+
+    @Test
+    public void testGetValue() {
+        MyArrayList<Integer> list = new MyArrayList<Integer>();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+
+        assertEquals((Integer) 10, list.get(0));
+        assertEquals((Integer) 20, list.get(1));
+        assertEquals((Integer) 30, list.get(2));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testUnsuccessfulGetValue() {
+        MyArrayList<Integer> list = new MyArrayList<>();
+        list.get(0);
+    }
+
+    @Test
+    public void testRemoveElement() {
+        MyArrayList<Integer> list = new MyArrayList<Integer>();
+        Object[] exceptedArray = new Object[]{10, 40};
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.add(40);
+        list.remove(1);
+        list.remove((Integer) 30);
+
+        assertEquals(2, list.size());
+        assertArrayEquals(exceptedArray, list.toArray());
+
     }
 }

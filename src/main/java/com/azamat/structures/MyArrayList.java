@@ -76,6 +76,20 @@ public class MyArrayList<E> {
         }
     }
 
+    private void removeFromArray(int index) {
+        int newSize = this.size - 1;
+
+        if (this.size-1 > index) {
+            System.arraycopy(this.elementData, index + 1,
+                this.elementData, index,
+                newSize - index);
+        }
+
+        this.size = newSize;
+        this.elementData[this.size] = null;
+
+    }
+
     /**
      * Add value to list by index.
      */
@@ -108,7 +122,34 @@ public class MyArrayList<E> {
      */
     public E get(int index) {
         checkIndex(index);
+
+        if (this.size == 0) {
+            throw new IndexOutOfBoundsException("Invalid index!");
+        }
+
         return (E) this.elementData[index];
+    }
+
+    public void remove(Object element) {
+        int elementIndex = -1;
+
+        for (int i=0; i<this.size; i++) {
+            if (this.elementData[i].equals(element)) {
+                elementIndex = i;
+            }
+        }
+
+        if (elementIndex == -1) {
+            return;
+        }
+
+        removeFromArray(elementIndex);
+    }
+
+    public void remove(int index) {
+        checkIndex(index);
+        removeFromArray(index);
+
     }
 
     /**
