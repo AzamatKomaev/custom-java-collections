@@ -44,6 +44,10 @@ public class MyArrayList<E> {
         return true;
     }
 
+    private boolean isFull() {
+        return this.size == this.elementData.length;
+    }
+
     /**
      * Calculate new size of elementData.
      * @return int
@@ -59,13 +63,8 @@ public class MyArrayList<E> {
     private void expandArray() {
         int newCapacity = newCapacity();
         this.elementData = Arrays.copyOf(this.elementData, newCapacity);
-        System.arraycopy(
-            elementData,
-            this.size,
-            elementData,
-            this.size+1,
-            0
-        );
+        System.arraycopy(elementData, this.size, elementData,
+                 this.size+1, 0);
     }
 
     /**
@@ -73,7 +72,7 @@ public class MyArrayList<E> {
      */
     private void checkIndex(int index) {
         if (index < 0 || index > size()) {
-            throw new IllegalArgumentException("Invalid index!");
+            throw new IndexOutOfBoundsException("Invalid index!");
         }
     }
 
@@ -82,18 +81,25 @@ public class MyArrayList<E> {
      */
     public void add(int index, E element) {
         checkIndex(index);
+        if (isFull()) {
+            expandArray();
+        }
+        System.arraycopy(this.elementData, index,
+                         this.elementData, index+1,
+                   this.size - index);
         this.elementData[index] = element;
+        this.size++;
     }
 
     /**
      * Add value to end of list.
      */
     public void add(E element) {
-        checkIndex(size);
-        if (size + 1 > this.elementData.length) {
+        checkIndex(this.size);
+        if (isFull()) {
             expandArray();
         }
-        add(this.size++, element);
+        this.elementData[this.size++] = element;
     }
 
     /**

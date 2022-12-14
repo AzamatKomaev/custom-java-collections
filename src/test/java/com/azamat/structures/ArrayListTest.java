@@ -35,13 +35,14 @@ public class ArrayListTest {
     @Test
     public void testAddValuesToEmptyList() {
         MyArrayList<Integer> list = new MyArrayList<>();
+        Object[] exceptedArray = new Object[]{1, 2};
         list.add(1);
         list.add(2);
 
         assertFalse(list.isEmpty());
         assertEquals(2, list.size());
         assertEquals("[1, 2]", list.toString());
-        assertEquals(new Object[]{1,2}, list.toArray());
+        assertArrayEquals(exceptedArray, list.toArray());
     }
 
     /*
@@ -64,7 +65,6 @@ public class ArrayListTest {
     public void testAddValuesToList() {
         MyArrayList<Integer> list = new MyArrayList<>();
         Object[] exceptedArray = new Object[]{1, 50, 3};
-
         list.add(1);
         list.add(2);
         list.add(3);
@@ -72,5 +72,13 @@ public class ArrayListTest {
 
         assertEquals(3, list.size());
         assertArrayEquals(exceptedArray, list.toArray());
+    }
+
+    @Test
+    public void testUnsuccessfulAddValuesToList() {
+        MyArrayList<Integer> list = new MyArrayList<>();
+
+
+        list.add(1, 100);
     }
 }
