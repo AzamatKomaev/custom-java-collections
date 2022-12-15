@@ -7,42 +7,27 @@ import org.junit.Test;
 public class ArrayListTest {
     @Test
     public void testCreateList() {
-        MyArrayList<Integer> list1 = new MyArrayList<Integer>();
-        MyArrayList<Integer> list2 = new MyArrayList<Integer>(5);
-        Object[] exceptedArray = new Object[]{};
+        MyArrayList<User> list1 = new MyArrayList<User>();
 
         assertTrue(list1.isEmpty());
-        assertTrue(list2.isEmpty());
         assertEquals(0, list1.size());
-        assertEquals(0, list2.size());
-        assertEquals("[]", list1.toString());
-        assertEquals("[]", list2.toString());
-        assertArrayEquals(exceptedArray, list1.toArray());
-        assertArrayEquals(exceptedArray, list2.toArray());
-    }
-
-    @Test
-    public void testCreateFixedSizeList() {
-        MyArrayList<Integer> list = new MyArrayList<Integer>(5);
-        Object[] exceptedArray = new Object[]{};
-
-        assertTrue(list.isEmpty());
-        assertEquals(0, list.size());
-        assertEquals("[]", list.toString());
-        assertArrayEquals(exceptedArray, list.toArray());
     }
 
     @Test
     public void testAddValuesToEmptyList() {
-        MyArrayList<Integer> list = new MyArrayList<>();
-        Object[] exceptedArray = new Object[]{1, 2};
-        list.add(1);
-        list.add(2);
+        MyArrayList<User> list = new MyArrayList<User>();
+        User[] usersList = {
+            new User("Azamat", "Komaev", 16),
+            new User("Dima", "Maslo", 23)
+        };
+        for (User user : usersList) {
+            list.add(user);
+        }
 
         assertFalse(list.isEmpty());
         assertEquals(2, list.size());
-        assertEquals("[1, 2]", list.toString());
-        assertArrayEquals(exceptedArray, list.toArray());
+        assertEquals(usersList[0], list.get(0));
+        assertEquals(usersList[1], list.get(1));
     }
 
     /*
@@ -51,86 +36,115 @@ public class ArrayListTest {
      */
     @Test
     public void testExpandFullArray() {
-        MyArrayList<Integer> list = new MyArrayList<>();
-        Object[] exceptedArray = new Object[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-        for (int i=0; i<15; i++) {
-            list.add(i);
+        MyArrayList<String> list = new MyArrayList<String>();
+        // 12 elements
+        String[] names = {
+            "Azamat", "David", "Vladimir", "Dmitry", "Sasha", "Alex",
+            "Petr", "Aaron", "Abby", "Abe", "Joy", "Judd"
+        };
+        for (String name : names) {
+            list.add(name);
         }
 
-        assertEquals(15, list.size());
-        assertArrayEquals(exceptedArray, list.toArray());
+        assertEquals(12, list.size());
+        for (int i=0; i<list.size(); i++) {
+            assertEquals(names[i], list.get(i));
+        }
     }
 
     @Test
     public void testAddValuesToEnd() {
-        MyArrayList<Integer> list = new MyArrayList<>();
-        Object[] exceptedArray = new Object[]{1, 50, 2, 3};
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(1, 50);
+        MyArrayList<User> list = new MyArrayList<User>();
+        User[] usersList = {
+            new User("Azamat", "Komaev", 16),
+            new User("Sasha", "Medvedev", 25),
+            new User("Vladimir", "Zaharov", 11),
+            new User("Nicolay", "Menshevikov", 52)
+        };
 
+        list.add(usersList[0]);
+        list.add(usersList[2]);
+        list.add(usersList[3]);
+        list.add(1, usersList[1]);
         assertEquals(4, list.size());
-        assertArrayEquals(exceptedArray, list.toArray());
+        for (int i=0; i<list.size(); i++) {
+            assertEquals(usersList[i], list.get(i));
+        }
     }
 
     @Test
     public void testAddValuesByIndex() {
-        MyArrayList<Integer> list = new MyArrayList<>();
-        Object[] exceptedArray = new Object[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        for (int i=1; i<=10; i++) {
+        MyArrayList<String> list = new MyArrayList<String>();
+        String[] letters = {"a", "b", "c", "d", "e", "f", "g", "h", "l", "j", "z"}; // 11 elements
+
+        for (int i=1; i<letters.length; i++) {
             if (i == 2) {
                 continue;
             }
-            list.add(i); // 1, 3, 4 ... 9, 10
+            list.add(letters[i]); // b, d, ... l, j
         }
-        list.add(0, 0);
-        list.add(2, 2);
+        list.add(0, letters[0]);
+        list.add(2, letters[2]);
 
         assertEquals(11, list.size());
-        assertArrayEquals(exceptedArray, list.toArray());
+        for (int i=0; i<list.size(); i++) {
+            assertEquals(letters[i], list.get(i));
+        }
 
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testUnsuccessfulAddValues() {
-        MyArrayList<Integer> list = new MyArrayList<>();
-        list.add(1, 100);
+        MyArrayList<String> list = new MyArrayList<String>();
+        list.add(1, "Azamat"); // Index out of range
 
         assertTrue(list.isEmpty());
     }
 
     @Test
     public void testGetValue() {
-        MyArrayList<Integer> list = new MyArrayList<Integer>();
-        list.add(10);
-        list.add(20);
-        list.add(30);
+        MyArrayList<User> list = new MyArrayList<User>();
+        User[] usersList = {
+            new User("Azamat", "Komaev", 16),
+            new User("Vasya", "Johnson", 23),
+            new User("Antosha", "Antoshovich", 12)
+        };
+        list.add(usersList[0]);
+        list.add(usersList[1]);
+        list.add(usersList[2]);
 
-        assertEquals((Integer) 10, list.get(0));
-        assertEquals((Integer) 20, list.get(1));
-        assertEquals((Integer) 30, list.get(2));
+        assertEquals(usersList[0], list.get(0));
+        assertEquals(usersList[1], list.get(1));
+        assertEquals(usersList[2], list.get(2));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testUnsuccessfulGetValue() {
-        MyArrayList<Integer> list = new MyArrayList<>();
-        list.get(0);
+        MyArrayList<String> list = new MyArrayList<String>();
+        list.add("Azamat");
+        list.add("Vladimir");
+        list.get(3); // Index out of range
     }
 
     @Test
     public void testRemoveElement() {
-        MyArrayList<Integer> list = new MyArrayList<Integer>();
-        Object[] exceptedArray = new Object[]{10, 40};
-        list.add(10);
-        list.add(20);
-        list.add(30);
-        list.add(40);
+        MyArrayList<User> list = new MyArrayList<User>();
+        User[] usersList = {
+            new User("Azamat", "Komaev", 16),
+            new User("Vasya", "Johnson", 23),
+            new User("Antosha", "Antoshovich", 12),
+            new User("Alex", "Gordon", 62)
+        };
+        for (User user : usersList) {
+            list.add(user);
+        }
+        assertEquals(4, list.size());
+
         list.remove(1);
-        list.remove((Integer) 30);
+        list.remove(usersList[2]);
 
         assertEquals(2, list.size());
-        assertArrayEquals(exceptedArray, list.toArray());
-
+        assertEquals(usersList[0], list.get(0));
+        assertEquals(usersList[3], list.get(1));
     }
 }
