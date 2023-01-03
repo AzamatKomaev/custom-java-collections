@@ -123,8 +123,14 @@ public class MyArrayList<E> {
         int elementIndex = -1;
 
         for (int i=0; i<this.size; i++) {
+            if (this.elementsData[i] == null && element == null) {
+                elementIndex = i;
+                break;
+            }
+
             if (this.elementsData[i].equals(element)) {
                 elementIndex = i;
+                break;
             }
         }
 

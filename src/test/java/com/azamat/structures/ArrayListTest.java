@@ -30,10 +30,6 @@ public class ArrayListTest {
         assertEquals(usersList[1], list.get(1));
     }
 
-    /*
-       By default, array inside list has length 10. So, If array size is 9, and you try
-       to add new value to end of list it should be expanded.
-     */
     @Test
     public void testExpandFullArray() {
         MyArrayList<String> list = new MyArrayList<String>();
@@ -66,6 +62,7 @@ public class ArrayListTest {
         list.add(usersList[2]);
         list.add(usersList[3]);
         list.add(1, usersList[1]);
+
         assertEquals(4, list.size());
         for (int i=0; i<list.size(); i++) {
             assertEquals(usersList[i], list.get(i));
@@ -96,13 +93,13 @@ public class ArrayListTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void testUnsuccessfulAddValues() {
         MyArrayList<String> list = new MyArrayList<String>();
-        list.add(1, "Azamat"); // Index out of range
+        list.add(1, "Azamat");
 
         assertTrue(list.isEmpty());
     }
 
     @Test
-    public void testGetValue() {
+    public void testGetValues() {
         MyArrayList<User> list = new MyArrayList<User>();
         User[] usersList = {
             new User("Azamat", "Komaev", 16),
@@ -119,7 +116,7 @@ public class ArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testUnsuccessfulGetValue() {
+    public void testUnsuccessfulGetValues() {
         MyArrayList<String> list = new MyArrayList<String>();
         list.add("Azamat");
         list.add("Vladimir");
@@ -127,7 +124,7 @@ public class ArrayListTest {
     }
 
     @Test
-    public void testRemoveElement() {
+    public void testRemoveElements() {
         MyArrayList<User> list = new MyArrayList<User>();
         User[] usersList = {
             new User("Azamat", "Komaev", 16),
