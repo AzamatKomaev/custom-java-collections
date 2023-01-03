@@ -3,31 +3,18 @@ package com.azamat.structures;
 import java.util.Arrays;
 
 public class MyArrayList<E> {
-    private static final int defaultCapacity = 10;
+    private static final int DEFAULT_CAPACITY = 10;
     private Object[] elementsData;
-    private int size = 0;
+    private int size;
 
-
-    /**
-     * Default constructor: create array with default size 10.
-     */
     MyArrayList() {
         this.elementsData = createArray();
     }
 
-    /**
-     * Create array with fixed size.
-     * @return Object[]
-     */
     private Object[] createArray() {
-        return new Object[this.defaultCapacity];
+        return new Object[this.DEFAULT_CAPACITY];
     }
 
-    /**
-     * Check if elementsData is empty.
-     * If it has only null elements it returns true.
-     * @return boolean
-     */
     public boolean isEmpty() {
         return this.size == 0;
     }
@@ -36,18 +23,11 @@ public class MyArrayList<E> {
         return this.size == this.elementsData.length;
     }
 
-    /**
-     * Calculate new size of elementsData.
-     * @return int
-     */
     private int newCapacity() {
         int oldCapacity = this.elementsData.length;
         return oldCapacity + (oldCapacity >> 1);
     }
 
-    /**
-     * Expand array with +1 place.
-     */
     private void expandArray() {
         int newCapacity = newCapacity();
         this.elementsData = Arrays.copyOf(this.elementsData, newCapacity);
@@ -55,18 +35,12 @@ public class MyArrayList<E> {
                  this.size+1, 0);
     }
 
-    /**
-     * Check if index is valid.
-     */
     private void checkIndex(int index) {
-        if (index < 0 || index > size()) {
+        if (index < 0 || index > this.size) {
             throw new IndexOutOfBoundsException("Invalid index!");
         }
     }
 
-    /**
-     * Remove element from elementsData by index.
-     */
     private void removeByIndex(int index) {
         int newSize = --this.size;
 
@@ -80,14 +54,13 @@ public class MyArrayList<E> {
 
     }
 
-    /**
-     * Add value to list by index.
-     */
     public void add(int index, E element) {
         checkIndex(index);
+
         if (isFull()) {
             expandArray();
         }
+
         System.arraycopy(this.elementsData, index,
                          this.elementsData, index+1,
                    this.size - index);
@@ -95,24 +68,12 @@ public class MyArrayList<E> {
         this.size++;
     }
 
-    /**
-     * Add value to end of list.
-     */
     public void add(E element) {
         this.add(this.size, element);
     }
 
-    /**
-     * Get value from list by index.
-     * @return E
-     */
     public E get(int index) {
         checkIndex(index);
-
-        if (isEmpty()) {
-            throw new IndexOutOfBoundsException("Invalid index!");
-        }
-
         return (E) this.elementsData[index];
     }
 
